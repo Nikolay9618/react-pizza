@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-function Sort() {
+function Sort({ value, setSortType }) {
 
    const [popap, setPopap] = useState(false);
-   const sortArr = ['популярности', 'цене', 'алфавиту'];
-   const [selected, setSelected] = useState(0)
+
+   const sortArr = [{ name: 'популярности', sort: 'rating' }, { name: 'цене', sort: 'price' }, { name: 'алфавиту', sort: 'title' }];
 
    return (
       <div onClick={() => setPopap(popap => !popap)} className="sort">
@@ -13,7 +13,7 @@ function Sort() {
                <path d="M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z" fill="#2C2C2C"></path>
             </svg>
             <b>Сортировка по:</b>
-            <span>{sortArr[selected]}</span>
+            <span>{value.name}</span>
          </div>
          {
             popap && (
@@ -21,7 +21,7 @@ function Sort() {
                   <ul>
                      {sortArr.map((el, i) => {
                         return (
-                           <li className={selected === i ? 'active' : ''} onClick={() => setSelected(selected => i)}>{el}</li>
+                           <li key={i} className={value.sort === el.sort ? 'active' : ''} onClick={() => setSortType(el)}>{el.name}</li>
                         )
                      })}
                   </ul>
